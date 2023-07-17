@@ -1,0 +1,12 @@
+button{
+  font-size: 1.5rem;
+  background-color: var(--button);
+  color: var(--def);
+  padding: 1rem;
+  border-radius: 50rem;
+  font-weight: 600;
+}
+
+button:hover{
+  background-color: var(--button-hover);
+}
