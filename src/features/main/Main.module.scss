@@ -12,25 +12,6 @@
     display: flex;
     gap: 4rem;
     width: 100%;
-
-    .textarea {
-      border-radius: 1rem;
-      padding: 0.75rem;
-      width: 100%;
-
-
-      textarea {
-        font-size: 1.5rem;
-        height: 2rem;
-        width: 100%;
-        border-bottom: 1px solid var(--back);
-        resize: none;
-        overflow: hidden;
-        display: block;
-        word-wrap: break-word;
-        font-weight: 400;
-      }
-    }
   }
 
   ul {

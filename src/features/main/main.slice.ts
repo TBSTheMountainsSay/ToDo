@@ -42,16 +42,28 @@ const mainSlice = createSlice({
       state.toDos = state.toDos.filter((toDo) => toDo.id !== action.payload);
     },
 
-    completedToDo: (state, action: PayloadAction<number>) => {
+    toggleCompleteToDo: (state, action: PayloadAction<number>) => {
       state.toDos = state.toDos.map((toDo) =>
         toDo.id === action.payload
           ? { ...toDo, isCompleted: !toDo.isCompleted }
           : toDo
       );
     },
+
+    saveEditing: (
+      state,
+      action: PayloadAction<{ id: number; editingContent: string }>
+    ) => {
+      state.toDos = state.toDos.map((toDo) =>
+        toDo.id === action.payload.id
+          ? { ...toDo, toDoContent: action.payload.editingContent }
+          : toDo
+      );
+    },
   },
 });
 
-export const { addToDo, deleteToDo, completedToDo } = mainSlice.actions;
+export const { addToDo, deleteToDo, toggleCompleteToDo, saveEditing } =
+  mainSlice.actions;
 
 export default mainSlice.reducer;

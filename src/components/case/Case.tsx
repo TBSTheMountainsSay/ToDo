@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Case.module.scss';
 import CustomButton from '../button/CustomButton';
 import { TypeToDo } from '../../features/main/Main.types';
 import { clsx } from 'clsx';
 import Checkbox from '../checkbox/Checkbox';
+import CustomTextarea from '../textarea/CustomTextarea';
 
 interface TCaseProps extends TypeToDo {
   handleDeleteToDo: () => void;
   handleToggleCompleted: () => void;
   handleToggleEditToDo: () => void;
-  Editing: number;
+  handleSaveEditing: (editingContent: string) => void;
+  isEditing: boolean;
 }
 
 const Case: React.FC<TCaseProps> = ({
@@ -19,8 +21,15 @@ const Case: React.FC<TCaseProps> = ({
   handleDeleteToDo,
   handleToggleCompleted,
   handleToggleEditToDo,
-  Editing,
+  handleSaveEditing,
+  isEditing,
 }) => {
+  const [editingContent, setEditingContent] = useState<string>(toDoContent);
+
+  const handleEditToDo = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setEditingContent(event.target.value);
+  };
+
   return (
     <div className={styles.case}>
       <Checkbox
@@ -28,12 +37,13 @@ const Case: React.FC<TCaseProps> = ({
         checked={isCompleted}
         className={styles.checkbox}
       />
-      {Editing ? (
+      {isEditing ? (
         <div className={styles.editing}>
-          <div className={styles.textarea}>
-            <textarea value={toDoContent} />
-          </div>
-          <CustomButton buttonName={'Сохранить'} />
+          <CustomTextarea value={editingContent} onChange={handleEditToDo} />
+          <CustomButton
+            buttonName={'Сохранить'}
+            onClick={() => handleSaveEditing(editingContent)}
+          />
         </div>
       ) : (
         <div

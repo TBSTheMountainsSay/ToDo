@@ -3,7 +3,13 @@ import styles from './Main.module.scss';
 import Case from '../../components/case/Case';
 import CustomButton from '../../components/button/CustomButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { addToDo, completedToDo, deleteToDo } from './main.slice';
+import {
+  addToDo,
+  toggleCompleteToDo,
+  deleteToDo,
+  saveEditing,
+} from './main.slice';
+import CustomTextarea from '../../components/textarea/CustomTextarea';
 
 interface TMainProps {}
 
@@ -11,10 +17,15 @@ const Main: React.FC<TMainProps> = ({}) => {
   const dispatch = useAppDispatch();
   const toDos = useAppSelector((state) => state.mainReducer.toDos);
 
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
   const [toDoContent, setToDoContent] = useState<string>('');
-  const [Editing, setEditing] = useState<number>(0);
+  const [editingId, setEditingId] = useState<number>(0);
+
+  // const handleClickAway = (event: MouseEvent) => {
+  //   document.removeEventListener('click', handleClickAway);
+  // };
+  //
+  // const textarea = useRef(null);
+  // document.addEventListener('click', handleClickAway);
 
   const handleWriteToDoContent = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -22,14 +33,6 @@ const Main: React.FC<TMainProps> = ({}) => {
     },
     []
   );
-
-  useEffect(() => {
-    if (textareaRef && textareaRef.current) {
-      textareaRef.current.style.height = '1.5rem';
-      const scrollHeight = textareaRef.current.scrollHeight;
-      textareaRef.current.style.height = scrollHeight + 'px';
-    }
-  }, [toDoContent]);
 
   const handleAddToDo = useCallback((toDoContent: string) => {
     dispatch(addToDo(toDoContent));
@@ -41,26 +44,28 @@ const Main: React.FC<TMainProps> = ({}) => {
   }, []);
 
   const handleToggleCompleted = useCallback((id: number) => {
-    dispatch(completedToDo(id));
+    dispatch(toggleCompleteToDo(id));
   }, []);
 
   const handleToggleEditToDo = useCallback(
     (id: number) => {
-      setEditing(id);
+      setEditingId(id);
     },
-    [Editing]
+    [editingId]
+  );
+
+  const handleSaveEditing = useCallback(
+    (id: number, editingContent: string) => {
+      dispatch(saveEditing({ id, editingContent }));
+      setEditingId(0);
+    },
+    []
   );
 
   return (
     <div className={styles.main}>
       <div className={styles.input}>
-        <div className={styles.textarea}>
-          <textarea
-            ref={textareaRef}
-            value={toDoContent}
-            onChange={handleWriteToDoContent}
-          />
-        </div>
+        <CustomTextarea value={toDoContent} onChange={handleWriteToDoContent} />
         <CustomButton
           buttonName={'Добавить'}
           onClick={() => handleAddToDo(toDoContent)}
@@ -76,7 +81,10 @@ const Main: React.FC<TMainProps> = ({}) => {
               handleDeleteToDo={() => handleDeleteToDo(toDo.id)}
               handleToggleCompleted={() => handleToggleCompleted(toDo.id)}
               handleToggleEditToDo={() => handleToggleEditToDo(toDo.id)}
-              Editing={Editing}
+              handleSaveEditing={(editingContent) =>
+                handleSaveEditing(toDo.id, editingContent)
+              }
+              isEditing={editingId === toDo.id}
             />
           );
         })}
