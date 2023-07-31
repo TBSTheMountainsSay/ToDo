@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Main.module.scss';
 import Case from '../../components/case/Case';
 import CustomButton from '../../components/button/CustomButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  addToDo,
-  toggleCompleteToDo,
-  deleteToDo,
-  saveEditing,
+  getToDosThunk,
+  addToDoThunk,
+  deleteToDoThunk,
+  toggleCompleteToDoThunk,
+  saveEditingThunk,
 } from './main.slice';
 import CustomTextarea from '../../components/textarea/CustomTextarea';
 
@@ -35,16 +36,16 @@ const Main: React.FC<TMainProps> = ({}) => {
   );
 
   const handleAddToDo = useCallback((toDoContent: string) => {
-    dispatch(addToDo(toDoContent));
+    dispatch(addToDoThunk(toDoContent));
     setToDoContent('');
   }, []);
 
   const handleDeleteToDo = useCallback((id: number) => {
-    dispatch(deleteToDo(id));
+    dispatch(deleteToDoThunk(id));
   }, []);
 
   const handleToggleCompleted = useCallback((id: number) => {
-    dispatch(toggleCompleteToDo(id));
+    dispatch(toggleCompleteToDoThunk(id));
   }, []);
 
   const handleToggleEditToDo = useCallback(
@@ -56,11 +57,15 @@ const Main: React.FC<TMainProps> = ({}) => {
 
   const handleSaveEditing = useCallback(
     (id: number, editingContent: string) => {
-      dispatch(saveEditing({ id, editingContent }));
+      dispatch(saveEditingThunk({ id, editingContent }));
       setEditingId(0);
     },
     []
   );
+
+  useEffect(() => {
+    dispatch(getToDosThunk());
+  }, []);
 
   return (
     <div className={styles.main}>
