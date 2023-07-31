@@ -1,0 +1,31 @@
+.main {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: 3rem;
+  justify-content: center;
+  width: 70%;
+  margin: 0 auto;
+
+  .input {
+    display: flex;
+    gap: 4rem;
+    width: 100%;
+  }
+
+  ul {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    gap: 1rem;
+    width: 92.5%;
+
+    .input {
+      gap: 2rem;
+    }
+  }
+}

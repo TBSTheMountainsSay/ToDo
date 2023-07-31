@@ -1,0 +1,12 @@
+.checkbox{
+  font-size: 2rem;
+  background-color: var(--def);
+  box-shadow: 0 0 0 0.4rem var(--button);
+  padding: 0.8rem;
+  border-radius: 50rem;
+}
+
+.checked{
+  background-color: var(--button);
+  box-shadow: 0 0 0 0.4rem var(--button);
+}

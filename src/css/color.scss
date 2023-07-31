@@ -1,0 +1,17 @@
+$palette:(
+        white: #fff,
+        grey: #E5E5E5,
+        light-grey: #84909F,
+        dark-grey: #575757,
+        orange:#f5a100,
+        light-orange: #ffc556,
+        black: #585858,
+        grey20: rgba(229, 229, 229, 0.2),
+);
+
+$light-theme:(
+        back: map-get($palette, grey),
+        button: map-get($palette, orange),
+        button-hover: map-get($palette, light-orange),
+        def: map-get($palette, white),
+);
