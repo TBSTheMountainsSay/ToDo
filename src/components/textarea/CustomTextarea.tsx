@@ -5,12 +5,14 @@ type TCustomTextareaProps = {
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   className?: string;
   value?: string;
+  placeholder: string;
 };
 
 const CustomTextarea: React.FC<TCustomTextareaProps> = ({
   onChange,
   className,
   value,
+  placeholder,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -29,6 +31,7 @@ const CustomTextarea: React.FC<TCustomTextareaProps> = ({
         value={value}
         onChange={onChange}
         className={className}
+        placeholder={placeholder}
       />
     </div>
   );

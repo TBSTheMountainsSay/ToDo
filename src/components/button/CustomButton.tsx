@@ -6,16 +6,20 @@ type TCustomButtonProps = {
   buttonName: string;
   onClick?: () => void;
   className?: string;
+  disabled?: boolean;
 };
 
 const CustomButton: React.FC<TCustomButtonProps> = ({
   buttonName,
   onClick,
   className,
+  disabled,
 }) => {
   return (
-    <div className={clsx(styles.button, className)}>
-      <button onClick={onClick}>{buttonName}</button>
+    <div className={styles.button}>
+      <button onClick={onClick} disabled={disabled}>
+        {buttonName}
+      </button>
     </div>
   );
 };

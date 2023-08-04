@@ -4,6 +4,7 @@ $palette:(
         light-grey: #84909F,
         dark-grey: #575757,
         orange:#f5a100,
+        orange30:rgba(245, 161, 0, 0.40),
         light-orange: #ffc556,
         black: #585858,
         grey20: rgba(229, 229, 229, 0.2),
@@ -14,4 +15,5 @@ $light-theme:(
         button: map-get($palette, orange),
         button-hover: map-get($palette, light-orange),
         def: map-get($palette, white),
+        button-disbled: map-get($palette, orange30),
 );

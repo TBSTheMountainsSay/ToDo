@@ -25,9 +25,17 @@ const Case: React.FC<TCaseProps> = ({
   isEditing,
 }) => {
   const [editingContent, setEditingContent] = useState<string>(toDoContent);
+  const [isActive, setIsActive] = useState<boolean>(false);
 
   const handleEditToDo = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditingContent(event.target.value);
+    if (editingContent.replaceAll(' ', '').length <= 1) {
+      setIsActive(true);
+    }
+    if (editingContent.replaceAll(' ', '').length > 1) {
+      setIsActive(false);
+    }
+    console.log(editingContent);
   };
 
   return (
@@ -39,10 +47,15 @@ const Case: React.FC<TCaseProps> = ({
       />
       {isEditing ? (
         <div className={styles.editing}>
-          <CustomTextarea value={editingContent} onChange={handleEditToDo} />
+          <CustomTextarea
+            value={editingContent}
+            onChange={handleEditToDo}
+            placeholder={'Изменить задачу'}
+          />
           <CustomButton
             buttonName={'Сохранить'}
             onClick={() => handleSaveEditing(editingContent)}
+            disabled={isActive}
           />
         </div>
       ) : (
