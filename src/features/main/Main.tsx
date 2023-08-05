@@ -11,12 +11,14 @@ import {
   saveEditingThunk,
 } from './main.slice';
 import CustomTextarea from '../../components/textarea/CustomTextarea';
+import SvgSelector from '../../components/SvgSelector/SvgSelector';
 
 interface TMainProps {}
 
 const Main: React.FC<TMainProps> = ({}) => {
   const dispatch = useAppDispatch();
   const toDos = useAppSelector((state) => state.mainReducer.toDos);
+  const meta = useAppSelector((state) => state.mainReducer.meta);
 
   const [toDoContent, setToDoContent] = useState<string>('');
   const [editingId, setEditingId] = useState<number>(0);
@@ -69,18 +71,22 @@ const Main: React.FC<TMainProps> = ({}) => {
 
   return (
     <div className={styles.main}>
-      <div className={styles.input}>
-        <CustomTextarea
-          value={toDoContent}
-          onChange={handleWriteToDoContent}
-          placeholder={'Добавить задачу'}
-        />
-        <CustomButton
-          buttonName={'Добавить'}
-          onClick={() => handleAddToDo(toDoContent)}
-          disabled={!toDoContent.length}
-        />
-      </div>
+      {meta.fetching || meta.creating ? (
+        <SvgSelector id={'preloader'} className={'svg-preloader'} />
+      ) : (
+        <div className={styles.input}>
+          <CustomTextarea
+            value={toDoContent}
+            onChange={handleWriteToDoContent}
+            placeholder={'Добавить задачу'}
+          />
+          <CustomButton
+            buttonName={'Добавить'}
+            onClick={() => handleAddToDo(toDoContent)}
+            disabled={!toDoContent.length}
+          />
+        </div>
+      )}
       <ul>
         {toDos.map((toDo) => {
           return (

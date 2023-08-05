@@ -28,6 +28,13 @@
     z-index: 1;
 }
 
+.svg-preloader{
+    stroke: var(--button);
+    width: 5rem;
+    height: 5rem;
+    margin: 0 auto;
+}
+
 :root {
     @each $name, $color in $light-theme {
         --#{$name}: #{$color};
