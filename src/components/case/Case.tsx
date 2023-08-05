@@ -25,17 +25,9 @@ const Case: React.FC<TCaseProps> = ({
   isEditing,
 }) => {
   const [editingContent, setEditingContent] = useState<string>(toDoContent);
-  const [isActive, setIsActive] = useState<boolean>(false);
 
   const handleEditToDo = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditingContent(event.target.value);
-    if (editingContent.replaceAll(' ', '').length <= 1) {
-      setIsActive(true);
-    }
-    if (editingContent.replaceAll(' ', '').length > 1) {
-      setIsActive(false);
-    }
-    console.log(editingContent);
   };
 
   return (
@@ -55,7 +47,7 @@ const Case: React.FC<TCaseProps> = ({
           <CustomButton
             buttonName={'Сохранить'}
             onClick={() => handleSaveEditing(editingContent)}
-            disabled={isActive}
+            disabled={!editingContent.length}
           />
         </div>
       ) : (

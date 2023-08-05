@@ -20,7 +20,6 @@ const Main: React.FC<TMainProps> = ({}) => {
 
   const [toDoContent, setToDoContent] = useState<string>('');
   const [editingId, setEditingId] = useState<number>(0);
-  const [isActive, setIsActive] = useState<boolean>(false);
 
   // const handleClickAway = (event: MouseEvent) => {
   //   document.removeEventListener('click', handleClickAway);
@@ -32,9 +31,6 @@ const Main: React.FC<TMainProps> = ({}) => {
   const handleWriteToDoContent = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setToDoContent(e.target.value);
-      if (e.target.value.length > 0) {
-        setIsActive(true);
-      }
     },
     []
   );
@@ -42,7 +38,6 @@ const Main: React.FC<TMainProps> = ({}) => {
   const handleAddToDo = useCallback((toDoContent: string) => {
     dispatch(addToDoThunk(toDoContent));
     setToDoContent('');
-    setIsActive(false);
   }, []);
 
   const handleDeleteToDo = useCallback((id: number) => {
@@ -83,7 +78,7 @@ const Main: React.FC<TMainProps> = ({}) => {
         <CustomButton
           buttonName={'Добавить'}
           onClick={() => handleAddToDo(toDoContent)}
-          disabled={!isActive}
+          disabled={!toDoContent.length}
         />
       </div>
       <ul>
